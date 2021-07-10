@@ -8,5 +8,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$USER_HOME$/Documents/GitHub/AndroidCA" vcs="Git" />
     <mapping directory="$USER_HOME$/git" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
 </project>

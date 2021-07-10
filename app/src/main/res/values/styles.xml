@@ -12,4 +12,7 @@
         <item name="android:src">@drawable/x</item>
         <item name="android:background">@drawable/imageview_grey_border</item>
     </style>
+    <style name="SplashTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
 </resources>
