@@ -2,6 +2,7 @@ package com.example.memorygame;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
@@ -30,13 +32,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bitmap=new Bitmap[20];
-        buttons=new ImageButton[20];
-        myContent=new Content();
         Button fetchButton=findViewById(R.id.button);
         fetchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                bitmap=new Bitmap[20];
+                buttons=new ImageButton[20];
+                if (myContent!=null) {
+                    myContent.cancel(true);
+                }
+                myContent=new Content();
                 EditText enteredURL=findViewById(R.id.editTextURL);
                 String URL=enteredURL.getText().toString();
                 myContent.execute(URL);
@@ -44,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public class Content extends AsyncTask<String, Void, Void> {
+        private AsyncTask<String, Void, Void> updateTask = null;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -59,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
                 // Locate the src attribute
                 for (int i=0;i<20;i++)
                 {
+                    if (isCancelled())
+                        break;
                     String imgSrc = images.get(i).absUrl("src");
                     // Download image from URL
                     InputStream input = new java.net.URL(imgSrc).openStream();
