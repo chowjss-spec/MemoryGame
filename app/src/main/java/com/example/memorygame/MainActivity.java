@@ -1,6 +1,8 @@
 package com.example.memorygame;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
     TextView progressStatus;
     Button playButton;
     Set<Integer> selected = new HashSet<>();
+    boolean selectAllowed = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +44,24 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
         bitmaps = new ArrayList<>();
         buttons = new ArrayList<>();
         playButton = findViewById(R.id.playBtn);
+        progressBar = findViewById(R.id.determinateBar);
+        progressStatus = findViewById(R.id.progressStatus);
 
+        // bind each ImageButton
         for (int j = 0; j < 20; j++) {
             String ImageButtonName = "button" + (j + 1);
             int resIDImageButton = getResources().getIdentifier(ImageButtonName, "id", getPackageName());
             ImageButton button = findViewById(resIDImageButton);
             button.setOnClickListener(v -> {
+                if (!selectAllowed)
+                    return;
+
                 int id = v.getId();
 
                 if (selected.contains(v.getId())) {
                     // TODO: change selected state to false
+                    Drawable normalBg = AppCompatResources.getDrawable(this, R.drawable.imageview_grey_border);
+                    v.setBackground(normalBg);
                     selected.remove(id);
                     onSelectionChange();
                     Log.d("selected", String.valueOf(selected));
@@ -63,6 +74,8 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
                 }
 
                 // TODO: change selected state to true
+                Drawable selectedBg = AppCompatResources.getDrawable(this, R.drawable.imageview_red_border);
+                v.setBackground(selectedBg);
                 selected.add(id);
                 onSelectionChange();
                 Log.d("selected", String.valueOf(selected));
@@ -70,13 +83,18 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
             buttons.add(button);
         }
 
-        progressBar = findViewById(R.id.determinateBar);
-        progressStatus = findViewById(R.id.progressStatus);
-
+        // bind fetchButton
         Button fetchButton = findViewById(R.id.button);
         fetchButton.setOnClickListener(v -> {
+            // clear selection in UI
+            for (int id : selected) {
+                ImageButton button = findViewById(id);
+                Drawable normalBg = AppCompatResources.getDrawable(this, R.drawable.imageview_grey_border);
+                button.setBackground(normalBg);
+            }
             selected.clear();
             onSelectionChange();
+            selectAllowed = false;
 
             if (fetchImageTask != null) {
                 fetchImageTask.cancel(true);
@@ -88,13 +106,24 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
             try {
                 fetchImageTask.execute(new URL(urlString));
             } catch (MalformedURLException e) {
-                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "Please enter a valid url", Toast.LENGTH_SHORT)
+                        .show();
             }
+        });
+
+        // bind playButton
+        Button playButton =findViewById(R.id.playBtn);
+        playButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, MainActivity2.class);
+            int[] payload = selected.stream().mapToInt(Number::intValue).toArray();
+            intent.putExtra("selectedImages", payload);
+            startActivity(intent);
         });
     }
 
     @Override
     public void onFetchComplete(List<Bitmap> result) {
+        selectAllowed = true;
         fetchImageTask = null;
 
         if (result.isEmpty()) {
@@ -125,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
             String ImageButtonName = "button" + (i + 1);
             int resIDImageButton = getResources().getIdentifier(ImageButtonName, "id", getPackageName());
             ImageButton button = findViewById(resIDImageButton);
-            button.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.question_mark));
+            button.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.x));
         }
     }
 

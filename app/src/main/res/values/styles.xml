@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="buttonStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:src">@drawable/question_mark</item>
+        <item name="android:layout_width">90dp</item>
+        <item name="android:layout_height">90dp</item>
+        <item name="android:src">@drawable/x</item>
         <item name="android:background">@drawable/imageview_grey_border</item>
-        <item name="android:scaleType">fitCenter</item>
     </style>
     <style name="buttonStyle2">
         <item name="android:layout_width">132dp</item>
         <item name="android:layout_height">132dp</item>
-        <item name="android:src">@drawable/question_mark</item>
+        <item name="android:src">@drawable/x2</item>
         <item name="android:background">@drawable/imageview_grey_border</item>
     </style>
     <style name="SplashTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">

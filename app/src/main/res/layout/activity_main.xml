@@ -17,7 +17,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:contentDescription="@string/logo" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/editTextURL"
@@ -26,7 +27,7 @@
         android:ems="10"
         android:inputType="textUri"
         android:text="Enter URL"
-        app:layout_constraintBottom_toTopOf="@id/frame1"
+        app:layout_constraintBottom_toTopOf="@id/button1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/button"
         app:layout_constraintTop_toBottomOf="@id/logo" />
@@ -37,374 +38,171 @@
         android:layout_height="wrap_content"
         android:text="@string/fetchButton"
         app:layout_constraintTop_toBottomOf="@id/logo"
-        app:layout_constraintBottom_toTopOf="@id/frame1"
+        app:layout_constraintBottom_toTopOf="@id/button1"
         app:layout_constraintLeft_toRightOf="@id/editTextURL"
         app:layout_constraintRight_toRightOf="parent" />
 
-    <FrameLayout
-        android:id="@+id/frame1"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button1"
+        style="@style/buttonStyle"
         app:layout_constraintVertical_bias="0.1"
         app:layout_constraintTop_toTopOf="@id/editTextURL"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/frame2">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button1"
-            style="@style/buttonStyle"
-             />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick1"
-            style="@style/tick"
-            android:visibility="visible" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frame2"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        app:layout_constraintRight_toLeftOf="@id/button2" />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button2"
+        style="@style/buttonStyle"
         app:layout_constraintVertical_bias="0.1"
         app:layout_constraintTop_toTopOf="@id/editTextURL"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/frame1"
-        app:layout_constraintRight_toLeftOf="@id/frame3">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button2"
-            style="@style/buttonStyle" />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick2"
-            style="@style/tick"
-            android:visibility="gone"/>
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frame3"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        app:layout_constraintLeft_toRightOf="@id/button1"
+        app:layout_constraintRight_toLeftOf="@id/button3" />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button3"
+        style="@style/buttonStyle"
         app:layout_constraintVertical_bias="0.1"
         app:layout_constraintTop_toTopOf="@id/editTextURL"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/frame2"
-        app:layout_constraintRight_toLeftOf="@id/frame4">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button3"
-            style="@style/buttonStyle" />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick3"
-            style="@style/tick"
-            android:visibility="gone"/>
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frame4"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        app:layout_constraintLeft_toRightOf="@id/button2"
+        app:layout_constraintRight_toLeftOf="@id/button4" />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button4"
+        style="@style/buttonStyle"
         app:layout_constraintVertical_bias="0.1"
         app:layout_constraintTop_toTopOf="@id/editTextURL"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/frame3"
-        app:layout_constraintRight_toRightOf="parent">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button4"
-            style="@style/buttonStyle" />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick4"
-            style="@style/tick"
-            android:visibility="gone"/>
-    </FrameLayout>
+        app:layout_constraintLeft_toRightOf="@id/button3"
+        app:layout_constraintRight_toRightOf="parent" />
 
-    <FrameLayout
-        android:id="@+id/frame5"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button5"
+        style="@style/buttonStyle"
         app:layout_constraintVertical_bias="0.012"
-        app:layout_constraintTop_toBottomOf="@id/frame1"
+        app:layout_constraintTop_toBottomOf="@id/button1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/frame6">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button5"
-            style="@style/buttonStyle"
-            />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick5"
-            style="@style/tick"
-            android:visibility="gone" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frame6"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        app:layout_constraintRight_toLeftOf="@id/button6" />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button6"
+        style="@style/buttonStyle"
         app:layout_constraintVertical_bias="0.012"
-        app:layout_constraintTop_toBottomOf="@id/frame1"
+        app:layout_constraintTop_toBottomOf="@id/button2"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/frame7"
-        app:layout_constraintRight_toLeftOf="@id/frame5">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button6"
-            style="@style/buttonStyle" />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick6"
-            style="@style/tick"
-            android:visibility="gone"/>
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frame7"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        app:layout_constraintLeft_toRightOf="@id/button5"
+        app:layout_constraintRight_toLeftOf="@id/button7" />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button7"
+        style="@style/buttonStyle"
         app:layout_constraintVertical_bias="0.012"
-        app:layout_constraintTop_toBottomOf="@id/frame1"
+        app:layout_constraintTop_toBottomOf="@id/button3"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/frame6"
-        app:layout_constraintRight_toLeftOf="@id/frame8">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button7"
-            style="@style/buttonStyle" />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick7"
-            style="@style/tick"
-            android:visibility="gone"/>
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frame8"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        app:layout_constraintLeft_toRightOf="@id/button6"
+        app:layout_constraintRight_toLeftOf="@id/button8" />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button8"
+        style="@style/buttonStyle"
         app:layout_constraintVertical_bias="0.012"
-        app:layout_constraintTop_toBottomOf="@id/frame1"
+        app:layout_constraintTop_toBottomOf="@id/button4"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/frame7"
-        app:layout_constraintRight_toRightOf="parent">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button8"
-            style="@style/buttonStyle" />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick8"
-            style="@style/tick"
-            android:visibility="gone"/>
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frame9"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        app:layout_constraintLeft_toRightOf="@id/button7"
+        app:layout_constraintRight_toRightOf="parent"/>
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button9"
+        style="@style/buttonStyle"
         app:layout_constraintVertical_bias="0.015"
-        app:layout_constraintTop_toBottomOf="@id/frame5"
+        app:layout_constraintTop_toBottomOf="@id/button5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/frame6">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button9"
-            style="@style/buttonStyle"
-            />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick9"
-            style="@style/tick"
-            android:visibility="gone" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frame10"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        app:layout_constraintRight_toLeftOf="@id/button10" />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button10"
+        style="@style/buttonStyle"
         app:layout_constraintVertical_bias="0.015"
-        app:layout_constraintTop_toBottomOf="@id/frame5"
+        app:layout_constraintTop_toBottomOf="@id/button6"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/frame5"
-        app:layout_constraintRight_toLeftOf="@id/frame7">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button10"
-            style="@style/buttonStyle" />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick10"
-            style="@style/tick"
-            android:visibility="gone"/>
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frame11"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        app:layout_constraintLeft_toRightOf="@id/button9"
+        app:layout_constraintRight_toLeftOf="@id/button11" />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button11"
+        style="@style/buttonStyle"
         app:layout_constraintVertical_bias="0.015"
-        app:layout_constraintTop_toBottomOf="@id/frame5"
+        app:layout_constraintTop_toBottomOf="@id/button7"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/frame6"
-        app:layout_constraintRight_toLeftOf="@id/frame8">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button11"
-            style="@style/buttonStyle" />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick11"
-            style="@style/tick"
-            android:visibility="gone"/>
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frame12"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        app:layout_constraintLeft_toRightOf="@id/button10"
+        app:layout_constraintRight_toLeftOf="@id/button12" />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button12"
+        style="@style/buttonStyle"
         app:layout_constraintVertical_bias="0.015"
-        app:layout_constraintTop_toBottomOf="@id/frame5"
+        app:layout_constraintTop_toBottomOf="@id/button8"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/frame7"
-        app:layout_constraintRight_toRightOf="parent">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button12"
-            style="@style/buttonStyle" />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick12"
-            style="@style/tick"
-            android:visibility="gone"/>
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frame13"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        app:layout_constraintLeft_toRightOf="@id/button11"
+        app:layout_constraintRight_toRightOf="parent"/>
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button13"
+        style="@style/buttonStyle"
         app:layout_constraintVertical_bias="0.02"
-        app:layout_constraintTop_toBottomOf="@id/frame9"
+        app:layout_constraintTop_toBottomOf="@id/button9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/frame6">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button13"
-            style="@style/buttonStyle"
-            />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick13"
-            style="@style/tick"
-            android:visibility="gone" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frame14"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        app:layout_constraintRight_toLeftOf="@id/button14" />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button14"
+        style="@style/buttonStyle"
         app:layout_constraintVertical_bias="0.02"
-        app:layout_constraintTop_toBottomOf="@id/frame9"
+        app:layout_constraintTop_toBottomOf="@id/button10"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/frame5"
-        app:layout_constraintRight_toLeftOf="@id/frame7">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button14"
-            style="@style/buttonStyle" />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick14"
-            style="@style/tick"
-            android:visibility="gone"/>
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frame15"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        app:layout_constraintLeft_toRightOf="@id/button13"
+        app:layout_constraintRight_toLeftOf="@id/button15" />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button15"
+        style="@style/buttonStyle"
         app:layout_constraintVertical_bias="0.02"
-        app:layout_constraintTop_toBottomOf="@id/frame9"
+        app:layout_constraintTop_toBottomOf="@id/button11"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/frame6"
-        app:layout_constraintRight_toLeftOf="@id/frame8">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button15"
-            style="@style/buttonStyle" />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick15"
-            style="@style/tick"
-            android:visibility="gone"/>
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frame16"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
+        app:layout_constraintLeft_toRightOf="@id/button14"
+        app:layout_constraintRight_toLeftOf="@id/button16" />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button16"
+        style="@style/buttonStyle"
         app:layout_constraintVertical_bias="0.02"
-        app:layout_constraintTop_toBottomOf="@id/frame9"
+        app:layout_constraintTop_toBottomOf="@id/button12"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/frame7"
-        app:layout_constraintRight_toRightOf="parent">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button16"
-            style="@style/buttonStyle" />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick16"
-            style="@style/tick"
-            android:visibility="gone"/>
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frame17"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        app:layout_constraintVertical_bias="0.03"
-        app:layout_constraintTop_toBottomOf="@id/frame13"
+        app:layout_constraintLeft_toRightOf="@id/button15"
+        app:layout_constraintRight_toRightOf="parent"/>
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button17"
+        style="@style/buttonStyle"
+        app:layout_constraintVertical_bias="0.029"
+        app:layout_constraintTop_toBottomOf="@id/button13"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/frame6">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button17"
-            style="@style/buttonStyle"
-            />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick17"
-            style="@style/tick"
-            android:visibility="gone" />
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frame18"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        app:layout_constraintVertical_bias="0.03"
-        app:layout_constraintTop_toBottomOf="@id/frame13"
+        app:layout_constraintRight_toLeftOf="@id/button18" />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button18"
+        style="@style/buttonStyle"
+        app:layout_constraintVertical_bias="0.029"
+        app:layout_constraintTop_toBottomOf="@id/button14"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/frame5"
-        app:layout_constraintRight_toLeftOf="@id/frame7">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button18"
-            style="@style/buttonStyle" />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick18"
-            style="@style/tick"
-            android:visibility="gone"/>
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frame19"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        app:layout_constraintVertical_bias="0.03"
-        app:layout_constraintTop_toBottomOf="@id/frame13"
+        app:layout_constraintLeft_toRightOf="@id/button17"
+        app:layout_constraintRight_toLeftOf="@id/button19" />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button19"
+        style="@style/buttonStyle"
+        app:layout_constraintVertical_bias="0.029"
+        app:layout_constraintTop_toBottomOf="@id/button15"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/frame6"
-        app:layout_constraintRight_toLeftOf="@id/frame8">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button19"
-            style="@style/buttonStyle" />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick19"
-            style="@style/tick"
-            android:visibility="gone"/>
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/frame20"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        app:layout_constraintVertical_bias="0.03"
-        app:layout_constraintTop_toBottomOf="@id/frame13"
+        app:layout_constraintLeft_toRightOf="@id/button18"
+        app:layout_constraintRight_toLeftOf="@id/button20" />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/button20"
+        style="@style/buttonStyle"
+        app:layout_constraintVertical_bias="0.029"
+        app:layout_constraintTop_toBottomOf="@id/button16"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/frame7"
-        app:layout_constraintRight_toRightOf="parent">
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/button20"
-            style="@style/buttonStyle" />
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/tick20"
-            style="@style/tick"
-            android:visibility="gone"/>
-    </FrameLayout>
+        app:layout_constraintLeft_toRightOf="@id/button19"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <ProgressBar
         android:id="@+id/determinateBar"
@@ -413,7 +211,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintVertical_bias="0.4"
-        app:layout_constraintTop_toBottomOf="@id/frame17"
+        app:layout_constraintTop_toBottomOf="@id/button17"
         app:layout_constraintBottom_toBottomOf="@id/progressStatus"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
