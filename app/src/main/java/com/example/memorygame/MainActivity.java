@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
                 if (selected.contains(v.getId())) {
                     // TODO: change selected state to false
                     selected.remove(id);
-                    playButton.setVisibility(View.GONE);
+                    onSelectionChange();
                     Log.d("selected", String.valueOf(selected));
                     return;
                 }
@@ -65,8 +64,7 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
 
                 // TODO: change selected state to true
                 selected.add(id);
-                if (selected.size() == 6)
-                    playButton.setVisibility(View.VISIBLE);
+                onSelectionChange();
                 Log.d("selected", String.valueOf(selected));
             });
             buttons.add(button);
@@ -77,6 +75,9 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
 
         Button fetchButton = findViewById(R.id.button);
         fetchButton.setOnClickListener(v -> {
+            selected.clear();
+            onSelectionChange();
+
             if (fetchImageTask != null) {
                 fetchImageTask.cancel(true);
                 Log.d("cancel", "Got cancelled bitch!");
@@ -89,19 +90,17 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
-
         });
     }
 
     @Override
     public void onFetchComplete(List<Bitmap> result) {
-        if (result.isEmpty())
-        {
-            Toast toast=Toast.makeText(getApplicationContext(),"Not enough images found",Toast.LENGTH_SHORT);
+        fetchImageTask = null;
+
+        if (result.isEmpty()) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Not enough images found", Toast.LENGTH_SHORT);
             toast.show();
-        }
-        else
-        {
+        } else {
             bitmaps.addAll(result);
             List<Bitmap> images = new ArrayList<>(result);
 
@@ -110,33 +109,50 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
                 button.setImageBitmap(images.get(j));
             }
         }
-        fetchImageTask = null;
+
+        progressBar.setProgress(0);
+        progressBar.setVisibility(View.GONE);
+        progressStatus.setText("");
     }
 
     @Override
     public void onFetchCancel() {
         progressBar.setProgress(0);
+        progressBar.setVisibility(View.GONE);
         progressStatus.setText("");
 
         for (int i = 0; i < 20; i++) {
             String ImageButtonName = "button" + (i + 1);
             int resIDImageButton = getResources().getIdentifier(ImageButtonName, "id", getPackageName());
             ImageButton button = findViewById(resIDImageButton);
-            button.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.x));
+            button.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.question_mark));
         }
     }
 
     @Override
     public void onProgressUpdate(int currProgress) {
-        int progressPercent = (int)(((currProgress) / 20.0) * 100);
+        if (progressBar.getVisibility() != View.VISIBLE)
+            progressBar.setVisibility(View.VISIBLE);
+
+        int progressPercent = (int) (((currProgress) / 20.0) * 100);
         progressBar.setProgress(progressPercent);
         progressStatus.setText(String.format("Downloading %s / 20", currProgress));
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (fetchImageTask!=null) {
+        if (fetchImageTask != null) {
             fetchImageTask.cancel(true);
         }
+    }
+
+    protected void onSelectionChange() {
+        if (selected.size() == 6) {
+            playButton.setVisibility(View.VISIBLE);
+            return;
+        }
+
+        playButton.setVisibility(View.GONE);
     }
 }
