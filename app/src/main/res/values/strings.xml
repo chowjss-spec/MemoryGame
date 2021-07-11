@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">MemoryGame</string>
+    <string name="app_name">Memory Match</string>
+    <string name="playButton">Play</string>
 </resources>

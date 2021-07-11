@@ -196,7 +196,7 @@
         style="@android:style/Widget.ProgressBar.Horizontal"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        app:layout_constraintVertical_bias="0.45"
+        app:layout_constraintVertical_bias="0.4"
         app:layout_constraintTop_toBottomOf="@id/button17"
         app:layout_constraintBottom_toBottomOf="@id/progressStatus"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -207,12 +207,24 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        app:layout_constraintVertical_bias="0.3"
-        android:text="Downloading 5 out of 20 images..."
+        app:layout_constraintVertical_bias="0.1"
+        android:text=""
         app:layout_constraintTop_toBottomOf="@id/determinateBar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/playBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/playButton"
+        android:visibility="gone"
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintTop_toBottomOf="@id/progressStatus"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
