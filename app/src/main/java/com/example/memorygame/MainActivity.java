@@ -18,17 +18,22 @@ import androidx.appcompat.content.res.AppCompatResources;
 
 import com.example.memorygame.Interface.FetchImageHandler;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements FetchImageHandler {
     FetchImageTask fetchImageTask;
     List<ImageButton> buttons;
-    List<Bitmap> bitmaps;
+    Map<Integer, Bitmap> bitmapDict;
     ProgressBar progressBar;
     TextView progressStatus;
     Button playButton;
@@ -41,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bitmaps = new ArrayList<>();
+        bitmapDict = new HashMap<Integer, Bitmap>();
         buttons = new ArrayList<>();
         playButton = findViewById(R.id.playBtn);
         progressBar = findViewById(R.id.determinateBar);
@@ -114,9 +119,19 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
         // bind playButton
         Button playButton =findViewById(R.id.playBtn);
         playButton.setOnClickListener(v -> {
+            String filePath = "selected_images";
+            String fileName = "img";
+
+            for (int id : selected) {
+                Bitmap bmp = bitmapDict.get(id);
+                File mTargetFile = new File(this.getFilesDir(), filePath + "/" + fileName + id + ".bmp");
+                writeImageToFile(mTargetFile, bmp);
+            }
+
             Intent intent = new Intent(this, MainActivity2.class);
-            int[] payload = selected.stream().mapToInt(Number::intValue).toArray();
-            intent.putExtra("selectedImages", payload);
+            String[] imgFiles = selected.stream().map(i -> "img" + i + ".bmp").toArray(String[]::new);
+
+            intent.putExtra("img", imgFiles);
             startActivity(intent);
         });
     }
@@ -130,12 +145,10 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
             Toast toast = Toast.makeText(getApplicationContext(), "Not enough images found", Toast.LENGTH_SHORT);
             toast.show();
         } else {
-            bitmaps.addAll(result);
-            List<Bitmap> images = new ArrayList<>(result);
-
             for (int j = 0; j < 20; j++) {
                 ImageButton button = buttons.get(j);
-                button.setImageBitmap(images.get(j));
+                button.setImageBitmap(result.get(j));
+                bitmapDict.put(button.getId(), result.get(j));
             }
         }
 
@@ -183,5 +196,19 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
         }
 
         playButton.setVisibility(View.GONE);
+    }
+
+    protected void writeImageToFile(File mTargetFile, Bitmap img) {
+        try {
+            File parent = mTargetFile.getParentFile();
+            if (parent != null && !parent.exists() && !parent.mkdirs()) {
+                throw new IllegalStateException("Couldn't create dir: " + parent);
+            }
+            FileOutputStream fos = new FileOutputStream(mTargetFile);
+            img.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        }
+        catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

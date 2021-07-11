@@ -13,10 +13,11 @@ public class MainActivity2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_2);
 
         Intent intent = getIntent();
-        int[] selected = intent.getIntArrayExtra("selectedImages");
+        String[] imgFiles = intent.getStringArrayExtra("img");
 
-        Log.d("received", Arrays.toString(selected));
+        Log.d("imgFiles", Arrays.toString(imgFiles));
     }
 }
