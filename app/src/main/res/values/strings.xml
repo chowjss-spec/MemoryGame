@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Memory Match</string>
     <string name="playButton">Play</string>
+    <string name="fetchButton">Fetch</string>
+    <string name="logo">logo</string>
 </resources>
