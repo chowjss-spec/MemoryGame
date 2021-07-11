@@ -1,5 +1,6 @@
 package com.example.memorygame;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
@@ -68,6 +69,10 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
                 if (selected.size() == 6)
                     playButton.setVisibility(View.VISIBLE);
                 Log.d("selected", String.valueOf(selected));
+                playButton.setOnClickListener(view -> {
+                    Intent intent = new Intent(this,MainActivity2.class);
+                    startActivity(intent);
+                });
             });
             buttons.add(button);
         }
