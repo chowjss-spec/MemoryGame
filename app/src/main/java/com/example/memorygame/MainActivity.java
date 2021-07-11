@@ -84,6 +84,10 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
                 selected.add(id);
                 onSelectionChange();
                 Log.d("selected", String.valueOf(selected));
+                playButton.setOnClickListener(view -> {
+                    Intent intent = new Intent(this,MainActivity2.class);
+                    startActivity(intent);
+                });
             });
             buttons.add(button);
         }
