@@ -40,27 +40,26 @@ public class FetchImageTask extends AsyncTask<URL, Integer, List<Bitmap>> {
             //Get the logo source of the website
             Elements images = document.select("img[src$=.jpg]");
 
-            // TODO: handle this exception
-            if (images.size() < 20)
-                throw new Exception("not enough images in URL");
+            // Only load images if there are more than 20
+            if (images.size() >= 20)
+            {
+                // Locate the src attribute
+                for (int i = 0; i < 20; i++) {
+                    if (isCancelled())
+                        return null;
+                    String imgSrc = images.get(i).absUrl("src");
+                    // Download image from URL
+                    InputStream input = new java.net.URL(imgSrc).openStream();
+                    // Decode Bitmap
+                    bitmaps.add(BitmapFactory.decodeStream(input));
 
-            // Locate the src attribute
-            for (int i = 0; i < 20; i++) {
-                if (isCancelled())
-                    return null;
-                String imgSrc = images.get(i).absUrl("src");
-                // Download image from URL
-                InputStream input = new java.net.URL(imgSrc).openStream();
-                // Decode Bitmap
-                bitmaps.add(BitmapFactory.decodeStream(input));
+                    // update progress bar
+                    publishProgress(i + 1);
 
-                // update progress bar
-                publishProgress(i + 1);
-
-                // for debugging
-                Log.d(urlString, "downloaded " + images.get(i).toString());
+                    // for debugging
+                    Log.d(urlString, "downloaded " + images.get(i).toString());
+                }
             }
-
 
         } catch (IOException e) {
             Log.d("exception", "IOException reading bitmap");

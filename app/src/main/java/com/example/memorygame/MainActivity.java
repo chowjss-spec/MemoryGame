@@ -4,11 +4,13 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -87,19 +89,27 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
+
         });
     }
 
     @Override
     public void onFetchComplete(List<Bitmap> result) {
-        bitmaps.addAll(result);
-        List<Bitmap> images = new ArrayList<>(result);
-        
-        for (int j = 0; j < 20; j++) {
-            ImageButton button = buttons.get(j);
-            button.setImageBitmap(images.get(j));
+        if (result.isEmpty())
+        {
+            Toast toast=Toast.makeText(getApplicationContext(),"Not enough images found",Toast.LENGTH_SHORT);
+            toast.show();
         }
+        else
+        {
+            bitmaps.addAll(result);
+            List<Bitmap> images = new ArrayList<>(result);
 
+            for (int j = 0; j < 20; j++) {
+                ImageButton button = buttons.get(j);
+                button.setImageBitmap(images.get(j));
+            }
+        }
         fetchImageTask = null;
     }
 
@@ -121,5 +131,12 @@ public class MainActivity extends AppCompatActivity implements FetchImageHandler
         int progressPercent = (int)(((currProgress) / 20.0) * 100);
         progressBar.setProgress(progressPercent);
         progressStatus.setText(String.format("Downloading %s / 20", currProgress));
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (fetchImageTask!=null) {
+            fetchImageTask.cancel(true);
+        }
     }
 }
