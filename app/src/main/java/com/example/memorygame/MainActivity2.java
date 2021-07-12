@@ -4,24 +4,87 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
+import java.util.TimeZone;
 
 public class MainActivity2 extends AppCompatActivity {
 
     int matchComplete =0;
+
+    private static final long startTimeInMil = 60000;
+
+    private TextView mTextViewCountDown;
+    private CountDownTimer mCountDownTimer;
+    private boolean mTimerRunning;
+    private long mTimeLeftInMillis = startTimeInMil;
+
+
+    private void startTimer(){
+        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis,1000) {
+            @Override
+            public void onTick(long l) {
+                mTimeLeftInMillis = l;
+                updateCountDownText();
+            }
+
+            @Override
+            public void onFinish() {
+                for (int j = 0; j < 12; j++) {
+                    String ImageButtonName = "guess" + (j + 1);
+                    int resIDImageButton = getResources().getIdentifier(ImageButtonName, "id", getPackageName());
+                    ImageButton button = findViewById(resIDImageButton);
+                    if(button!=null){
+                        button.setOnClickListener(null);
+                    }
+                    Button completeBtn = findViewById(R.id.completeActivity2);
+                    if (completeBtn !=null){
+                        completeBtn.setVisibility(View.VISIBLE);
+                        completeBtn.setText("Try Again");
+                        completeBtn.setOnClickListener(view -> {
+                            Intent intent1 = new Intent(getApplicationContext(),MainActivity.class);
+                            startActivity(intent1);
+                        });
+                    }
+                }
+            }
+        }.start();
+
+        mTimerRunning = true;
+    }
+
+
+
+    private void updateCountDownText(){
+        int minutes = (int) (mTimeLeftInMillis/1000/60);
+        int seconds = (int) (mTimeLeftInMillis/1000%60);
+
+        String timeLeftFormatted = String.format(Locale.getDefault(),"%02d:%02d",minutes,seconds);
+
+        mTextViewCountDown.setText(timeLeftFormatted);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         List<ImageButton> tempClicked = new ArrayList<>();
+
+        //For timer
+        mTextViewCountDown = findViewById(R.id.timer);
+
+        startTimer();
+        updateCountDownText();
+
 
         //For each of the button, we should randomly set the tags of the buttons.
         //For now hardcode the bitmaps
