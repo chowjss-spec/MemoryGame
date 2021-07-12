@@ -3,13 +3,19 @@ package com.example.memorygame;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.FileUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,8 +68,6 @@ public class MainActivity2 extends AppCompatActivity {
         mTimerRunning = true;
     }
 
-
-
     private void updateCountDownText(){
         int minutes = (int) (mTimeLeftInMillis/1000/60);
         int seconds = (int) (mTimeLeftInMillis/1000%60);
@@ -82,26 +86,41 @@ public class MainActivity2 extends AppCompatActivity {
         //For timer
         mTextViewCountDown = findViewById(R.id.timer);
 
-        startTimer();
-        updateCountDownText();
-
-
         //For each of the button, we should randomly set the tags of the buttons.
         //For now hardcode the bitmaps
         Random randGenerator = new Random();
-        List<Integer> listOfBitmaps = new ArrayList<>();
-        listOfBitmaps.add(R.drawable.image1);
-        listOfBitmaps.add(R.drawable.image2);
-        listOfBitmaps.add(R.drawable.image3);
-        listOfBitmaps.add(R.drawable.image4);
-        listOfBitmaps.add(R.drawable.image5);
-        listOfBitmaps.add(R.drawable.image6);
-        listOfBitmaps.add(R.drawable.image1);
-        listOfBitmaps.add(R.drawable.image2);
-        listOfBitmaps.add(R.drawable.image3);
-        listOfBitmaps.add(R.drawable.image4);
-        listOfBitmaps.add(R.drawable.image5);
-        listOfBitmaps.add(R.drawable.image6);
+        List<Bitmap> listOfBitmaps = new ArrayList<>();
+//        listOfBitmaps.add(R.drawable.image1);
+//        listOfBitmaps.add(R.drawable.image2);
+//        listOfBitmaps.add(R.drawable.image3);
+//        listOfBitmaps.add(R.drawable.image4);
+//        listOfBitmaps.add(R.drawable.image5);
+//        listOfBitmaps.add(R.drawable.image6);
+//        listOfBitmaps.add(R.drawable.image1);
+//        listOfBitmaps.add(R.drawable.image2);
+//        listOfBitmaps.add(R.drawable.image3);
+//        listOfBitmaps.add(R.drawable.image4);
+//        listOfBitmaps.add(R.drawable.image5);
+//        listOfBitmaps.add(R.drawable.image6);
+//
+        Intent activity1Intent = getIntent();
+        String[] directory = activity1Intent.getStringArrayExtra("img");
+        String filePath = "selected_images";
+        for (String direct : directory ) {
+            File mTargetFile = new File(this.getFilesDir(), filePath + "/" + direct);
+
+            try {
+                Bitmap b = BitmapFactory.decodeStream(new FileInputStream(mTargetFile));
+                listOfBitmaps.add(b);
+                listOfBitmaps.add(b);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        startTimer();
+        updateCountDownText();
+
 
         int totalNum = 12;
 
@@ -113,7 +132,7 @@ public class MainActivity2 extends AppCompatActivity {
             if(button!=null)
             {
                 int generatedIndex = randGenerator.nextInt(totalNum);
-                int tag = listOfBitmaps.get(generatedIndex);
+                Bitmap tag = listOfBitmaps.get(generatedIndex);
                 button.setTag(tag);
                 button.setImageResource(R.drawable.x);
                 listOfBitmaps.remove(generatedIndex);
@@ -128,8 +147,8 @@ public class MainActivity2 extends AppCompatActivity {
                                 if (tempClicked.get(0) == button) {
                                     System.out.println("you have clicked this before");
                                 } else {
-                                    button.setImageResource((Integer) button.getTag());
-                                    button.setTag((Integer) button.getTag());
+                                    button.setImageBitmap((Bitmap) button.getTag());
+//                                    button.setTag((Integer) button.getTag());
                                     tempClicked.add(button);
 
                                     //Checking if match
@@ -147,6 +166,15 @@ public class MainActivity2 extends AppCompatActivity {
                                                 matchCounter.setText(new StringBuilder().append(matchComplete).append("/6 Match").toString());
                                                 completeBtn.setOnClickListener(view1 -> {
                                                     Intent intent = new Intent(this,MainActivity.class);
+                                                    File dir = new File (this.getFilesDir(), filePath);
+                                                    if (dir.isDirectory())
+                                                    {
+                                                        String[] children = dir.list();
+                                                        for (int i = 0; i < children.length; i++)
+                                                        {
+                                                            new File(dir, children[i]).delete();
+                                                        }
+                                                    }
                                                     startActivity(intent);
                                                 });
                                             }
@@ -162,7 +190,7 @@ public class MainActivity2 extends AppCompatActivity {
                                 }
                             }
                             else{
-                                    button.setImageResource((Integer) button.getTag());
+                                    button.setImageBitmap((Bitmap) button.getTag());
                                     tempClicked.add(button);
                                 }
                         }
@@ -183,6 +211,15 @@ public class MainActivity2 extends AppCompatActivity {
                                 matchCounter.setText("6/6 Match");
                                 completeBtn.setOnClickListener(view1 -> {
                                     Intent intent = new Intent(this,MainActivity.class);
+                                    File dir = new File (this.getFilesDir(), filePath);
+                                    if (dir.isDirectory())
+                                    {
+                                        String[] children = dir.list();
+                                        for (int i = 0; i < children.length; i++)
+                                        {
+                                            new File(dir, children[i]).delete();
+                                        }
+                                    }
                                     startActivity(intent);
                                 });
                             }
