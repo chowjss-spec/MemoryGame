@@ -10,6 +10,7 @@ import android.os.CountDownTimer;
 import android.os.FileUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -35,48 +36,6 @@ public class MainActivity2 extends AppCompatActivity {
     private long mTimeLeftInMillis = startTimeInMil;
 
 
-    private void startTimer(){
-        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis,1000) {
-            @Override
-            public void onTick(long l) {
-                mTimeLeftInMillis = l;
-                updateCountDownText();
-            }
-
-            @Override
-            public void onFinish() {
-                for (int j = 0; j < 12; j++) {
-                    String ImageButtonName = "guess" + (j + 1);
-                    int resIDImageButton = getResources().getIdentifier(ImageButtonName, "id", getPackageName());
-                    ImageButton button = findViewById(resIDImageButton);
-                    if(button!=null){
-                        button.setOnClickListener(null);
-                    }
-                    Button completeBtn = findViewById(R.id.completeActivity2);
-                    if (completeBtn !=null){
-                        completeBtn.setVisibility(View.VISIBLE);
-                        completeBtn.setText("Try Again");
-                        completeBtn.setOnClickListener(view -> {
-                            Intent intent1 = new Intent(getApplicationContext(),MainActivity.class);
-                            startActivity(intent1);
-                        });
-                    }
-                }
-            }
-        }.start();
-
-        mTimerRunning = true;
-    }
-
-    private void updateCountDownText(){
-        int minutes = (int) (mTimeLeftInMillis/1000/60);
-        int seconds = (int) (mTimeLeftInMillis/1000%60);
-
-        String timeLeftFormatted = String.format(Locale.getDefault(),"%02d:%02d",minutes,seconds);
-
-        mTextViewCountDown.setText(timeLeftFormatted);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +44,10 @@ public class MainActivity2 extends AppCompatActivity {
 
         //For timer
         mTextViewCountDown = findViewById(R.id.timer);
+
+        //For Chronometer
+        Chronometer chronoTimer = (Chronometer) findViewById(R.id.chronoTimer);
+        chronoTimer.start();
 
         //For each of the button, we should randomly set the tags of the buttons.
         //For now hardcode the bitmaps
@@ -118,8 +81,6 @@ public class MainActivity2 extends AppCompatActivity {
             }
         }
 
-        startTimer();
-        updateCountDownText();
 
 
         int totalNum = 12;
@@ -164,6 +125,7 @@ public class MainActivity2 extends AppCompatActivity {
                                             if (completeBtn !=null){
                                                 completeBtn.setVisibility(View.VISIBLE);
                                                 matchCounter.setText(new StringBuilder().append(matchComplete).append("/6 Match").toString());
+                                                chronoTimer.stop();
                                                 completeBtn.setOnClickListener(view1 -> {
                                                     Intent intent = new Intent(this,MainActivity.class);
                                                     File dir = new File (this.getFilesDir(), filePath);
@@ -209,6 +171,7 @@ public class MainActivity2 extends AppCompatActivity {
                                 completeBtn.setVisibility(View.VISIBLE);
                                 TextView matchCounter = findViewById(R.id.matches);
                                 matchCounter.setText("6/6 Match");
+                                chronoTimer.stop();
                                 completeBtn.setOnClickListener(view1 -> {
                                     Intent intent = new Intent(this,MainActivity.class);
                                     File dir = new File (this.getFilesDir(), filePath);
