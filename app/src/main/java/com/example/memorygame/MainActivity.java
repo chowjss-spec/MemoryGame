@@ -18,8 +18,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 
-import com.example.memorygame.Interface.FetchImageHandler;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -28,17 +26,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.RunnableFuture;
 
-public class MainActivity extends AppCompatActivity  {
+public class MainActivity extends AppCompatActivity {
     List<ImageButton> buttons;
     Map<Integer, Bitmap> bitmapDict;
     ProgressBar progressBar;
@@ -54,7 +49,7 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bitmapDict = new HashMap<Integer, Bitmap>();
+        bitmapDict = new HashMap<>();
         buttons = new ArrayList<>();
         playButton = findViewById(R.id.playBtn);
         progressBar = findViewById(R.id.determinateBar);
@@ -72,7 +67,6 @@ public class MainActivity extends AppCompatActivity  {
                 int id = v.getId();
 
                 if (selected.contains(v.getId())) {
-                    // TODO: change selected state to false
                     Drawable normalBg = AppCompatResources.getDrawable(this, R.drawable.imageview_grey_border);
                     v.setBackground(normalBg);
                     selected.remove(id);
@@ -86,99 +80,17 @@ public class MainActivity extends AppCompatActivity  {
                     return;
                 }
 
-                // TODO: change selected state to true
                 Drawable selectedBg = AppCompatResources.getDrawable(this, R.drawable.imageview_red_border);
                 v.setBackground(selectedBg);
                 selected.add(id);
                 onSelectionChange();
                 Log.d("selected", String.valueOf(selected));
-                playButton.setOnClickListener(view -> {
-                    Intent intent = new Intent(this,MainActivity2.class);
-                    startActivity(intent);
-                });
             });
             buttons.add(button);
         }
 
-        // bind fetchButton
-        Button fetchButton = findViewById(R.id.button);
-        fetchButton.setOnClickListener(v -> {
-            // clear selection in UI
-            for (int id : selected) {
-                ImageButton button = findViewById(id);
-                Drawable normalBg = AppCompatResources.getDrawable(this, R.drawable.imageview_grey_border);
-                button.setBackground(normalBg);
-            }
-            selected.clear();
-            onSelectionChange();
-            selectAllowed = false;
-
-
-            EditText enteredURL = findViewById(R.id.editTextURL);
-            String urlString = enteredURL.getText().toString();
-            //checks if URL is valid
-            if (!URLUtil.isValidUrl(urlString))
-                return;
-
-            if (fetchImageThread!=null)
-            {
-                fetchImageThread.interrupt();
-                fetchImageThread=null;
-            }
-
-            fetchImageThread= new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Document document = Jsoup.connect(urlString).get();
-
-                        //Get the image sources on the website
-                        Elements images = document.select("img[src$=.jpg]");
-
-                        // Only load images if there are more than 20
-                        if (images.size() >= 20)
-                        {
-                            // Locate the src attribute
-                            for (int i = 0; i < 20; i++) {
-                                if (Thread.interrupted())
-                                    return;
-                                int finalI = i;
-                                String imgSrc = images.get(i).absUrl("src");
-                                // Download image from URL
-                                InputStream input = new java.net.URL(imgSrc).openStream();
-                                // Decode Bitmap
-                                Bitmap result=BitmapFactory.decodeStream(input);
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        // this is okay!
-                                        ImageButton button = buttons.get(finalI);
-                                        button.setImageBitmap(result);
-                                        bitmapDict.put(button.getId(), result);
-                                    }
-                                });
-                                // update progress bar
-                                // publishProgress(i + 1);
-
-                                // for debugging
-                                Log.d(urlString, "downloaded " + images.get(i).toString());
-                            }
-                        }
-                        else
-                            return;
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-
-
-            fetchImageThread.start();
-
-        });
-
         // bind playButton
-        Button playButton =findViewById(R.id.playBtn);
+        Button playButton = findViewById(R.id.playBtn);
         playButton.setOnClickListener(v -> {
             String filePath = "selected_images";
             String fileName = "img";
@@ -195,51 +107,81 @@ public class MainActivity extends AppCompatActivity  {
             intent.putExtra("img", imgFiles);
             startActivity(intent);
         });
+
+        // bind fetchButton
+        Button fetchButton = findViewById(R.id.button);
+        fetchButton.setOnClickListener(v -> {
+
+            EditText enteredURL = findViewById(R.id.editTextURL);
+            String urlString = enteredURL.getText().toString();
+
+            //checks if URL is valid
+            if (!URLUtil.isValidUrl(urlString)) {
+                Toast.makeText(getApplicationContext(), "Please enter a valid URL", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (fetchImageThread != null) {
+                fetchImageThread.interrupt();
+            }
+
+            fetchImageThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    runOnUiThread(() -> onStartFetch());
+                    try {
+                        Document document = Jsoup.connect(urlString).get();
+
+                        //Get the image sources on the website
+                        Elements images = document.select("img[src$=.jpg]");
+
+                        Log.d("url", urlString);
+                        Log.d("images", String.valueOf(images.size()));
+                        // Only load images if there are more than 20
+                        if (images.size() >= 20) {
+                            // Locate the src attribute
+                            for (int i = 0; i < 20; i++) {
+                                if (Thread.interrupted()) {
+                                    break;
+                                }
+
+                                final int finalI = i;
+                                String imgSrc = images.get(i).absUrl("src");
+                                // Download image from URL
+                                InputStream input = new java.net.URL(imgSrc).openStream();
+                                // Decode Bitmap
+                                Bitmap result = BitmapFactory.decodeStream(input);
+                                runOnUiThread(() -> {
+                                    // this is okay!
+                                    ImageButton button = buttons.get(finalI);
+                                    button.setImageBitmap(result);
+                                    bitmapDict.put(button.getId(), result);
+                                });
+                                // update progress bar
+                                runOnUiThread(() -> {
+                                    onProgressUpdate(finalI + 1);
+                                });
+                            }
+                            runOnUiThread(() -> {
+                                onFetchComplete();
+                            });
+                            return;
+                        }
+
+                        runOnUiThread(() -> {
+                            Toast.makeText(getApplicationContext(), "Unable to fetch enough images", Toast.LENGTH_SHORT).show();
+                        });
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            fetchImageThread.start();
+
+        });
     }
-
-
-    //public void onFetchComplete(List<Bitmap> result) {
-    //    selectAllowed = true;
-    //
-    //   if (result.isEmpty()) {
-    //        Toast toast = Toast.makeText(getApplicationContext(), "Not enough images found", Toast.LENGTH_SHORT);
-    //        toast.show();
-    //    } else {
-    //        for (int j = 0; j < 20; j++) {
-    //            ImageButton button = buttons.get(j);
-    //            button.setImageBitmap(result.get(j));
-    //            bitmapDict.put(button.getId(), result.get(j));
-    //        }
-    //    }
-
-    //    progressBar.setProgress(0);
-    //    progressBar.setVisibility(View.GONE);
-    //    progressStatus.setText("");
-    //}
-
-    //@Override
-    //public void onFetchCancel() {
-    //   progressBar.setProgress(0);
-    //   progressBar.setVisibility(View.GONE);
-    //   progressStatus.setText("");
-
-    //   for (int i = 0; i < 20; i++) {
-    //        String ImageButtonName = "button" + (i + 1);
-    //        int resIDImageButton = getResources().getIdentifier(ImageButtonName, "id", getPackageName());
-    //        ImageButton button = findViewById(resIDImageButton);
-    //        button.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.x));
-    // }
-    //}
-
-    //@Override
-    //public void onProgressUpdate(int currProgress) {
-    //    if (progressBar.getVisibility() != View.VISIBLE)
-    //        progressBar.setVisibility(View.VISIBLE);
-    //
-    //       int progressPercent = (int) (((currProgress) / 20.0) * 100);
-    //     progressBar.setProgress(progressPercent);
-    //   progressStatus.setText(String.format("Downloading %s / 20", currProgress));
-    //}
 
     @Override
     public void onDestroy() {
@@ -247,6 +189,40 @@ public class MainActivity extends AppCompatActivity  {
         if (fetchImageThread != null) {
             fetchImageThread.interrupt();
         }
+    }
+
+    public void onStartFetch() {
+        // clear selection in UI
+        for (int id : selected) {
+            ImageButton button = findViewById(id);
+            Drawable normalBg = AppCompatResources.getDrawable(this, R.drawable.imageview_grey_border);
+            button.setBackground(normalBg);
+        }
+        selected.clear();
+        onSelectionChange();
+        selectAllowed = false;
+
+        progressBar.setProgress(0);
+        progressBar.setVisibility(View.GONE);
+        progressStatus.setText("");
+    }
+
+    public void onFetchComplete() {
+        selectAllowed = true;
+
+        progressBar.setProgress(0);
+        progressBar.setVisibility(View.GONE);
+        progressStatus.setText("");
+        fetchImageThread = null;
+    }
+
+    public void onProgressUpdate(int currProgress) {
+        if (progressBar.getVisibility() != View.VISIBLE)
+            progressBar.setVisibility(View.VISIBLE);
+
+        int progressPercent = (int) (((currProgress) / 20.0) * 100);
+        progressBar.setProgress(progressPercent);
+        progressStatus.setText(String.format("Downloading %s / 20", currProgress));
     }
 
     protected void onSelectionChange() {
@@ -266,8 +242,7 @@ public class MainActivity extends AppCompatActivity  {
             }
             FileOutputStream fos = new FileOutputStream(mTargetFile);
             img.compress(Bitmap.CompressFormat.PNG, 100, fos);
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
