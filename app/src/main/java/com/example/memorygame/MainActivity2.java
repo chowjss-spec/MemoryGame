@@ -61,12 +61,41 @@ public class MainActivity2 extends AppCompatActivity {
                         System.out.println("Clicked" + ImageButtonName);
                         if (tempClicked.size() < 2) {
                             if (tempClicked.size() == 1) {
+                                //prevent same button clicking
                                 if (tempClicked.get(0) == button) {
                                     System.out.println("you have clicked this before");
                                 } else {
                                     button.setImageResource((Integer) button.getTag());
                                     button.setTag((Integer) button.getTag());
                                     tempClicked.add(button);
+
+                                    //Checking if match
+                                    TextView matchCounter = findViewById(R.id.matches);
+                                    if (tempClicked.get(0).getTag().toString().equals(tempClicked.get(1).getTag().toString())) {
+                                        System.out.println("match");
+                                        matchComplete +=1;
+                                        if(matchComplete<=5){
+                                            matchCounter.setText(new StringBuilder().append(matchComplete).append("/6 Match").toString());
+                                        }
+                                        else{
+                                            Button completeBtn = findViewById(R.id.completeActivity2);
+                                            if (completeBtn !=null){
+                                                completeBtn.setVisibility(View.VISIBLE);
+                                                matchCounter.setText(new StringBuilder().append(matchComplete).append("/6 Match").toString());
+                                                completeBtn.setOnClickListener(view1 -> {
+                                                    Intent intent = new Intent(this,MainActivity.class);
+                                                    startActivity(intent);
+                                                });
+                                            }
+                                        }
+                                        for (int i = 0; i < 2; i++) {
+                                            tempClicked.get(i).setOnClickListener(null);
+                                        }
+                                        tempClicked.clear();
+                                    }
+                                    else {
+                                        tempClicked.add(button);
+                                    }
                                 }
                             }
                             else{
@@ -74,26 +103,14 @@ public class MainActivity2 extends AppCompatActivity {
                                     tempClicked.add(button);
                                 }
                         }
-                        //if I have opened 2 images alr and I click again
                         else {
-                            TextView matchCounter = findViewById(R.id.matches);
-                            if (tempClicked.get(0).getTag().toString().equals(tempClicked.get(1).getTag().toString())) {
-                                System.out.println("match");
-                                matchComplete +=1;
-                                if(matchComplete<=5){
-                                    matchCounter.setText(new StringBuilder().append(matchComplete).append("/6 Match").toString());
-                                }
-                                for (int i = 0; i < 2; i++) {
-                                    tempClicked.get(i).setOnClickListener(null);
-                                }
-                            } else {
-                                for (ImageButton buttons : tempClicked) {
-                                    buttons.setImageResource(R.drawable.x);
-                                }
-                                System.out.println("Don't match");
+                            for (ImageButton buttons : tempClicked) {
+                                buttons.setImageResource(R.drawable.x);
                             }
+                            System.out.println("Don't match");
                             tempClicked.clear();
                         }
+
                         System.out.println((tempClicked.size()));
                         if(matchComplete==5 && tempClicked.size()==2){
                             Button completeBtn = findViewById(R.id.completeActivity2);
