@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     Set<Integer> selected = new HashSet<>();
     boolean selectAllowed = false;
     Thread fetchImageThread;
+    private SoundEffect sound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         playButton = findViewById(R.id.playBtn);
         progressBar = findViewById(R.id.determinateBar);
         progressStatus = findViewById(R.id.progressStatus);
+        sound = new SoundEffect(this);
 
         // bind each ImageButton
         for (int j = 0; j < 20; j++) {
@@ -61,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             int resIDImageButton = getResources().getIdentifier(ImageButtonName, "id", getPackageName());
             ImageButton button = findViewById(resIDImageButton);
             button.setOnClickListener(v -> {
+                sound.clickSelect();
                 if (!selectAllowed)
                     return;
 
@@ -92,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         // bind playButton
         Button playButton = findViewById(R.id.playBtn);
         playButton.setOnClickListener(v -> {
+            sound.clickSelect();
             String filePath = "selected_images";
             String fileName = "img";
 
@@ -111,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         // bind fetchButton
         Button fetchButton = findViewById(R.id.button);
         fetchButton.setOnClickListener(v -> {
-
+            sound.clickSelect();
             EditText enteredURL = findViewById(R.id.editTextURL);
             String urlString = enteredURL.getText().toString();
 

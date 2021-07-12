@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.FileUtils;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
@@ -34,13 +35,15 @@ public class MainActivity2 extends AppCompatActivity {
     private CountDownTimer mCountDownTimer;
     private boolean mTimerRunning;
     private long mTimeLeftInMillis = startTimeInMil;
-
+    private SoundEffect sound;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         List<ImageButton> tempClicked = new ArrayList<>();
+        sound = new SoundEffect(this);
 
         //For timer
         mTextViewCountDown = findViewById(R.id.timer);
@@ -101,6 +104,7 @@ public class MainActivity2 extends AppCompatActivity {
 
                 //Onclick Listener
                 button.setOnClickListener(view -> {
+                        sound.clickSelect();
                         System.out.println("Clicked" + ImageButtonName);
                         if (tempClicked.size() < 2) {
                             if (tempClicked.size() == 1) {
@@ -115,6 +119,7 @@ public class MainActivity2 extends AppCompatActivity {
                                     //Checking if match
                                     TextView matchCounter = findViewById(R.id.matches);
                                     if (tempClicked.get(0).getTag().toString().equals(tempClicked.get(1).getTag().toString())) {
+                                        sound.correctMatch();
                                         System.out.println("match");
                                         matchComplete +=1;
                                         if(matchComplete<=5){
@@ -127,6 +132,7 @@ public class MainActivity2 extends AppCompatActivity {
                                                 matchCounter.setText(new StringBuilder().append(matchComplete).append("/6 Match").toString());
                                                 chronoTimer.stop();
                                                 completeBtn.setOnClickListener(view1 -> {
+                                                    sound.completeMatch();
                                                     Intent intent = new Intent(this,MainActivity.class);
                                                     File dir = new File (this.getFilesDir(), filePath);
                                                     if (dir.isDirectory())
@@ -137,7 +143,14 @@ public class MainActivity2 extends AppCompatActivity {
                                                             new File(dir, children[i]).delete();
                                                         }
                                                     }
-                                                    startActivity(intent);
+                                                    handler.postDelayed(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            // Go back to main page after 3 seconds
+                                                            // After sound effect
+                                                            startActivity(intent);
+                                                        }
+                                                    }, 3000);
                                                 });
                                             }
                                         }
@@ -147,6 +160,7 @@ public class MainActivity2 extends AppCompatActivity {
                                         tempClicked.clear();
                                     }
                                     else {
+                                        sound.incorrectMatch();
                                         tempClicked.add(button);
                                     }
                                 }
@@ -173,6 +187,7 @@ public class MainActivity2 extends AppCompatActivity {
                                 matchCounter.setText("6/6 Match");
                                 chronoTimer.stop();
                                 completeBtn.setOnClickListener(view1 -> {
+                                    sound.completeMatch();
                                     Intent intent = new Intent(this,MainActivity.class);
                                     File dir = new File (this.getFilesDir(), filePath);
                                     if (dir.isDirectory())
@@ -183,7 +198,14 @@ public class MainActivity2 extends AppCompatActivity {
                                             new File(dir, children[i]).delete();
                                         }
                                     }
-                                    startActivity(intent);
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            // Go back to main page after 3 seconds
+                                            // After sound effect
+                                            startActivity(intent);
+                                        }
+                                    }, 3000);
                                 });
                             }
                         }
