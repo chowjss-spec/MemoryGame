@@ -69,6 +69,11 @@ public class MainActivity2 extends AppCompatActivity {
 //        listOfBitmaps.add(R.drawable.image5);
 //        listOfBitmaps.add(R.drawable.image6);
 //
+
+        Intent intentM = new Intent(this, Music.class);
+        intentM.setAction("Game_Music");
+        startService(intentM);
+
         Intent activity1Intent = getIntent();
         String[] directory = activity1Intent.getStringArrayExtra("img");
         String filePath = "selected_images";
@@ -148,6 +153,7 @@ public class MainActivity2 extends AppCompatActivity {
                                                         public void run() {
                                                             // Go back to main page after 3 seconds
                                                             // After sound effect
+                                                            stopService(intentM);
                                                             startActivity(intent);
                                                         }
                                                     }, 3000);
@@ -203,6 +209,7 @@ public class MainActivity2 extends AppCompatActivity {
                                         public void run() {
                                             // Go back to main page after 3 seconds
                                             // After sound effect
+                                            stopService(intentM);
                                             startActivity(intent);
                                         }
                                     }, 3000);

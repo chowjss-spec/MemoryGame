@@ -57,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
         progressStatus = findViewById(R.id.progressStatus);
         sound = new SoundEffect(this);
 
+        Intent intentM = new Intent(this, Music.class);
+        intentM.setAction("Main_Music");
+        startService(intentM);
+
         // bind each ImageButton
         for (int j = 0; j < 20; j++) {
             String ImageButtonName = "button" + (j + 1);
@@ -110,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
             intent.putExtra("img", imgFiles);
             startActivity(intent);
+            stopService(intentM);
         });
 
         // bind fetchButton
