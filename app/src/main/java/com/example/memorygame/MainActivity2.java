@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,57 +56,59 @@ public class MainActivity2 extends AppCompatActivity {
                 listOfBitmaps.remove(generatedIndex);
                 totalNum-=1;
 
+                //Onclick Listener
                 button.setOnClickListener(view -> {
-                            System.out.println("Clicked" + ImageButtonName);
-
-                            if (tempClicked.size() < 2) {
-                                if (tempClicked.size() == 1) {
-                                    if (tempClicked.get(0) == button) {
-                                        System.out.println("you have clicked this before");
-                                    } else {
-                                        button.setImageResource((Integer) button.getTag());
-                                        button.setTag((Integer) button.getTag());
-                                        tempClicked.add(button);
-                                    }
-                                }
-                                else{
-
-                                        button.setImageResource((Integer) button.getTag());
-                                        tempClicked.add(button);
-                                    }
-                            }
-                            else {
-                                if (tempClicked.get(0).getTag().toString().equals(tempClicked.get(1).getTag().toString())) {
-                                    System.out.println("match");
-                                    matchComplete +=1;
-                                    for (int i = 0; i < 2; i++) {
-                                        tempClicked.get(i).setOnClickListener(null);
-                                    }
+                        System.out.println("Clicked" + ImageButtonName);
+                        if (tempClicked.size() < 2) {
+                            if (tempClicked.size() == 1) {
+                                if (tempClicked.get(0) == button) {
+                                    System.out.println("you have clicked this before");
                                 } else {
-                                    for (ImageButton buttons : tempClicked) {
-                                        buttons.setImageResource(R.drawable.x);
-                                    }
-                                    System.out.println("Don't match");
+                                    button.setImageResource((Integer) button.getTag());
+                                    button.setTag((Integer) button.getTag());
+                                    tempClicked.add(button);
                                 }
-                                tempClicked.clear();
                             }
-                            System.out.println((tempClicked.size()));
-                            if(matchComplete==5 && tempClicked.size()==2){
-                                Button completeBtn = findViewById(R.id.completeActivity2);
-                                if (completeBtn !=null){
-                                    completeBtn.setVisibility(View.VISIBLE);
-                                    completeBtn.setOnClickListener(view1 -> {
-                                        Intent intent = new Intent(this,MainActivity.class);
-                                        startActivity(intent);
-                                    });
-                            }
-
+                            else{
+                                    button.setImageResource((Integer) button.getTag());
+                                    tempClicked.add(button);
+                                }
                         }
-
-            });
+                        //if I have opened 2 images alr and I click again
+                        else {
+                            TextView matchCounter = findViewById(R.id.matches);
+                            if (tempClicked.get(0).getTag().toString().equals(tempClicked.get(1).getTag().toString())) {
+                                System.out.println("match");
+                                matchComplete +=1;
+                                if(matchComplete<=5){
+                                    matchCounter.setText(new StringBuilder().append(matchComplete).append("/6 Match").toString());
+                                }
+                                for (int i = 0; i < 2; i++) {
+                                    tempClicked.get(i).setOnClickListener(null);
+                                }
+                            } else {
+                                for (ImageButton buttons : tempClicked) {
+                                    buttons.setImageResource(R.drawable.x);
+                                }
+                                System.out.println("Don't match");
+                            }
+                            tempClicked.clear();
+                        }
+                        System.out.println((tempClicked.size()));
+                        if(matchComplete==5 && tempClicked.size()==2){
+                            Button completeBtn = findViewById(R.id.completeActivity2);
+                            if (completeBtn !=null){
+                                completeBtn.setVisibility(View.VISIBLE);
+                                TextView matchCounter = findViewById(R.id.matches);
+                                matchCounter.setText("6/6 Match");
+                                completeBtn.setOnClickListener(view1 -> {
+                                    Intent intent = new Intent(this,MainActivity.class);
+                                    startActivity(intent);
+                                });
+                            }
+                        }
+                });
             }
-
-
         }
     }
 }
