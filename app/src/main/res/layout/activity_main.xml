@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    android:background="@color/babyblue">
+    android:background="@color/babygreen">
 
     <ImageView
         android:id="@+id/logo"
@@ -33,7 +33,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/button"
         app:layout_constraintTop_toBottomOf="@id/logo"
-        android:layout_marginLeft="10dp"/>
+        android:layout_marginLeft="5dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"
