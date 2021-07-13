@@ -45,7 +45,7 @@ public class MainActivity2 extends AppCompatActivity {
             public void onFinish() {
 
                 for (ImageButton buttons : tempClicked) {
-                    buttons.setImageResource(R.drawable.x);
+                    buttons.setImageResource(R.drawable.sushi2);
                 }
                 System.out.println("Don't match");
 
