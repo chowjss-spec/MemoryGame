@@ -1,5 +1,6 @@
 package com.example.memorygame;
 
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,10 +10,6 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Chronometer;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -159,8 +156,11 @@ public class MainActivity2 extends AppCompatActivity {
                                                 completeBtn.setVisibility(View.VISIBLE);
                                                 matchCounter.setText(new StringBuilder().append(matchComplete).append("/6 Match").toString());
                                                 chronoTimer.stop();
+                                                String seconds=getChronometerSeconds(chronoTimer);
+                                                Toast.makeText(getApplicationContext(),"You only used "+seconds+" seconds to win,nice! Now please click COMPLETE~",Toast.LENGTH_LONG).show();
                                                 completeBtn.setOnClickListener(view1 -> {
                                                     sound.completeMatch();
+
                                                     Intent intent = new Intent(this,MainActivity.class);
                                                     File dir = new File (this.getFilesDir(), filePath);
                                                     if (dir.isDirectory())
@@ -217,8 +217,12 @@ public class MainActivity2 extends AppCompatActivity {
                                 TextView matchCounter = findViewById(R.id.matches);
                                 matchCounter.setText("6/6 Match");
                                 chronoTimer.stop();
+                                String seconds1=getChronometerSeconds(chronoTimer);
+                                Toast.makeText(getApplicationContext(),"You only used "+seconds1+" seconds to win,nice! Now please click COMPLETE~",Toast.LENGTH_LONG).show();
                                 completeBtn.setOnClickListener(view1 -> {
+
                                     sound.completeMatch();
+
                                     Intent intent = new Intent(this,MainActivity.class);
                                     File dir = new File (this.getFilesDir(), filePath);
                                     if (dir.isDirectory())
@@ -245,4 +249,37 @@ public class MainActivity2 extends AppCompatActivity {
             }
         }
     }
+    public  static String getChronometerSeconds(Chronometer cmt) {
+        int totalss = 0;
+        String string = cmt.getText().toString();
+        if(string.length()==7){
+
+            String[] split = string.split(":");
+            String string2 = split[0];
+            int hour = Integer.parseInt(string2);
+            int Hours =hour*3600;
+            String string3 = split[1];
+            int min = Integer.parseInt(string3);
+            int Mins =min*60;
+            int  SS =Integer.parseInt(split[2]);
+            totalss = Hours+Mins+SS;
+            return String.valueOf(totalss);
+        }
+
+        else if(string.length()==5){
+
+            String[] split = string.split(":");
+            String string3 = split[0];
+            int min = Integer.parseInt(string3);
+            int Mins =min*60;
+            int  SS =Integer.parseInt(split[1]);
+
+            totalss =Mins+SS;
+            return String.valueOf(totalss);
+        }
+        return String.valueOf(totalss);
+
+
+    }
+
 }
