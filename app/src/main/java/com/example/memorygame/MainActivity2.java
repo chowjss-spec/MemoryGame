@@ -25,7 +25,7 @@ public class MainActivity2 extends AppCompatActivity {
 
     int matchComplete =0;
 
-    private static final long startTimeInMil = 60000;
+    private static final long startTimeInMil = 6000;
 
     private TextView mTextViewCountDown;
     private CountDownTimer mCountDownTimer;
@@ -33,6 +33,32 @@ public class MainActivity2 extends AppCompatActivity {
     private long mTimeLeftInMillis = startTimeInMil;
     private SoundEffect sound;
     private Handler handler = new Handler();
+
+    private void startTimer(ArrayList<ImageButton> tempClicked){
+        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis,1000) {
+            @Override
+            public void onTick(long l) {
+                mTimeLeftInMillis= l;
+            }
+
+            @Override
+            public void onFinish() {
+
+                for (ImageButton buttons : tempClicked) {
+                    buttons.setImageResource(R.drawable.x);
+                }
+                System.out.println("Don't match");
+
+                tempClicked.clear();
+                mTimeLeftInMillis=startTimeInMil;
+
+            }
+        }.start();
+    }
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +69,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         //For timer
         mTextViewCountDown = findViewById(R.id.timer);
+
 
         //For Chronometer
         Chronometer chronoTimer = (Chronometer) findViewById(R.id.chronoTimer);
@@ -164,6 +191,7 @@ public class MainActivity2 extends AppCompatActivity {
                                     else {
                                         sound.incorrectMatch();
                                         tempClicked.add(button);
+                                        startTimer((ArrayList<ImageButton>) tempClicked);
                                     }
                                 }
                             }
@@ -177,6 +205,7 @@ public class MainActivity2 extends AppCompatActivity {
                                 buttons.setImageResource(R.drawable.sushi2);
                             }
                             System.out.println("Don't match");
+
                             tempClicked.clear();
                         }
 
