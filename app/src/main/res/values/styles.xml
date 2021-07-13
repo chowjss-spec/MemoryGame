@@ -23,4 +23,16 @@
         <item name="android:layout_gravity">top</item>
         <item name="android:scaleType">fitCenter</item>
     </style>
+    <style name="buttonStyle3">
+        <item name="android:layout_width">90dp</item>
+        <item name="android:layout_height">90dp</item>
+        <item name="android:src">@drawable/sushi</item>
+        <item name="android:background">@drawable/imageview_black_border</item>
+    </style>
+    <style name="buttonStyle4">
+        <item name="android:layout_width">120dp</item>
+        <item name="android:layout_height">120dp</item>
+        <item name="android:src">@drawable/sushi2</item>
+        <item name="android:background">@drawable/imageview_black_border</item>
+    </style>
 </resources>

@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.FileUtils;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
@@ -18,12 +17,9 @@ import android.widget.TextView;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Random;
-import java.util.TimeZone;
 
 public class MainActivity2 extends AppCompatActivity {
 
@@ -103,7 +99,7 @@ public class MainActivity2 extends AppCompatActivity {
                 int generatedIndex = randGenerator.nextInt(totalNum);
                 Bitmap tag = listOfBitmaps.get(generatedIndex);
                 button.setTag(tag);
-                button.setImageResource(R.drawable.x);
+                button.setImageResource(R.drawable.sushi2);
                 listOfBitmaps.remove(generatedIndex);
                 totalNum-=1;
 
@@ -178,7 +174,7 @@ public class MainActivity2 extends AppCompatActivity {
                         }
                         else {
                             for (ImageButton buttons : tempClicked) {
-                                buttons.setImageResource(R.drawable.x);
+                                buttons.setImageResource(R.drawable.sushi2);
                             }
                             System.out.println("Don't match");
                             tempClicked.clear();

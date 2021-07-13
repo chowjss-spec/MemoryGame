@@ -29,6 +29,7 @@ public class Music extends Service {
                 case "Main_Music":
                     songs = MediaPlayer.create(this, R.raw.komiku);
                     songs.setLooping(true);
+                    songs.setVolume(0.4f, 0.4f);
                     songs.setOnPreparedListener(mp -> songs.start());
                     break;
             }

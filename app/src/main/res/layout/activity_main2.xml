@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity2">
+    tools:context=".MainActivity2"
+    android:background="@color/babyblue">
 
     <ImageView
         android:id="@+id/logo2"
@@ -13,12 +14,13 @@
         android:layout_height="50dp"
         android:contentDescription="@string/logo"
         android:scaleType="fitCenter"
-        android:src="@drawable/logo"
+        android:src="@drawable/logo2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01" />
+        app:layout_constraintVertical_bias="0.01"
+        android:layout_marginTop="15dp" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/matches"
@@ -26,10 +28,13 @@
         android:layout_height="wrap_content"
         android:text="0 of 6 matches"
         android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.1"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"/>
 <!--    <androidx.appcompat.widget.AppCompatTextView-->
 <!--        android:id="@+id/timer"-->
 <!--        android:layout_width="wrap_content"-->
@@ -44,73 +49,82 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/guess1"
-        style="@style/buttonStyle2"
+        android:scaleType="fitXY"
+        style="@style/buttonStyle4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/guess2"
         app:layout_constraintTop_toBottomOf="@id/matches"
-        app:layout_constraintVertical_bias="0.07" />
+        app:layout_constraintVertical_bias="0.015" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/guess2"
-        style="@style/buttonStyle2"
-        app:layout_constraintVertical_bias="0.07"
+        android:scaleType="fitXY"
+        style="@style/buttonStyle4"
+        app:layout_constraintVertical_bias="0.015"
         app:layout_constraintTop_toBottomOf="@id/matches"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/guess1"
         app:layout_constraintRight_toLeftOf="@id/guess3" />
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/guess3"
-        style="@style/buttonStyle2"
-        app:layout_constraintVertical_bias="0.07"
+        android:scaleType="fitXY"
+        style="@style/buttonStyle4"
+        app:layout_constraintVertical_bias="0.015"
         app:layout_constraintTop_toBottomOf="@id/matches"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/guess2"
         app:layout_constraintRight_toRightOf="parent" />
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/guess4"
-        style="@style/buttonStyle2"
-        app:layout_constraintVertical_bias="0.002"
+        android:scaleType="fitXY"
+        style="@style/buttonStyle4"
+        app:layout_constraintVertical_bias="0.02"
         app:layout_constraintTop_toBottomOf="@id/guess1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/guess5" />
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/guess5"
-        style="@style/buttonStyle2"
-        app:layout_constraintVertical_bias="0.002"
+        android:scaleType="fitXY"
+        style="@style/buttonStyle4"
+        app:layout_constraintVertical_bias="0.02"
         app:layout_constraintTop_toBottomOf="@id/guess2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/guess4"
         app:layout_constraintRight_toLeftOf="@id/guess6" />
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/guess6"
-        style="@style/buttonStyle2"
-        app:layout_constraintVertical_bias="0.002"
+        android:scaleType="fitXY"
+        style="@style/buttonStyle4"
+        app:layout_constraintVertical_bias="0.02"
         app:layout_constraintTop_toBottomOf="@id/guess3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/guess5"
         app:layout_constraintRight_toRightOf="parent" />
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/guess7"
-        style="@style/buttonStyle2"
-        app:layout_constraintVertical_bias="0.002"
+        android:scaleType="fitXY"
+        style="@style/buttonStyle4"
+        app:layout_constraintVertical_bias="0.025"
         app:layout_constraintTop_toBottomOf="@id/guess4"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/guess8" />
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/guess8"
-        style="@style/buttonStyle2"
-        app:layout_constraintVertical_bias="0.002"
+        android:scaleType="fitXY"
+        style="@style/buttonStyle4"
+        app:layout_constraintVertical_bias="0.025"
         app:layout_constraintTop_toBottomOf="@id/guess5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/guess7"
         app:layout_constraintRight_toLeftOf="@id/guess9" />
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/guess9"
-        style="@style/buttonStyle2"
-        app:layout_constraintVertical_bias="0.002"
+        android:scaleType="fitXY"
+        style="@style/buttonStyle4"
+        app:layout_constraintVertical_bias="0.025"
         app:layout_constraintTop_toBottomOf="@id/guess6"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/guess8"
@@ -118,8 +132,9 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/guess10"
-        style="@style/buttonStyle2"
-        app:layout_constraintVertical_bias="0.01"
+        android:scaleType="fitXY"
+        style="@style/buttonStyle4"
+        app:layout_constraintVertical_bias="0.045"
         app:layout_constraintTop_toBottomOf="@id/guess7"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -127,16 +142,18 @@
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/guess11"
-        style="@style/buttonStyle2"
-        app:layout_constraintVertical_bias="0.01"
+        android:scaleType="fitXY"
+        style="@style/buttonStyle4"
+        app:layout_constraintVertical_bias="0.045"
         app:layout_constraintTop_toBottomOf="@id/guess8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/guess10"
         app:layout_constraintRight_toLeftOf="@id/guess12" />
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/guess12"
-        style="@style/buttonStyle2"
-        app:layout_constraintVertical_bias="0.01"
+        android:scaleType="fitXY"
+        style="@style/buttonStyle4"
+        app:layout_constraintVertical_bias="0.045"
         app:layout_constraintTop_toBottomOf="@id/guess9"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/guess11"
@@ -146,7 +163,7 @@
         android:id="@+id/completeActivity2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Complete"
+        android:background="@drawable/completebtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -159,11 +176,14 @@
         android:layout_height="wrap_content"
         android:text="00:03:45"
         android:textSize="25sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@id/matches"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.1"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
