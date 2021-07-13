@@ -31,6 +31,10 @@ public class MainActivity2 extends AppCompatActivity {
     private SoundEffect sound;
     private Handler handler = new Handler();
 
+
+    private int clickedTimes=0;
+    private int accurateClickedTimes=0;
+
     private void startTimer(ArrayList<ImageButton> tempClicked){
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis,1000) {
             @Override
@@ -130,6 +134,7 @@ public class MainActivity2 extends AppCompatActivity {
                 //Onclick Listener
                 button.setOnClickListener(view -> {
                         sound.clickSelect();
+
                         System.out.println("Clicked" + ImageButtonName);
                         if (tempClicked.size() < 2) {
                             if (tempClicked.size() == 1) {
@@ -139,12 +144,14 @@ public class MainActivity2 extends AppCompatActivity {
                                 } else {
                                     button.setImageBitmap((Bitmap) button.getTag());
 //                                    button.setTag((Integer) button.getTag());
+                                    clickedTimes+=2;
                                     tempClicked.add(button);
 
                                     //Checking if match
                                     TextView matchCounter = findViewById(R.id.matches);
                                     if (tempClicked.get(0).getTag().toString().equals(tempClicked.get(1).getTag().toString())) {
                                         sound.correctMatch();
+                                        accurateClickedTimes+=2;
                                         System.out.println("match");
                                         matchComplete +=1;
                                         if(matchComplete<=5){
@@ -157,7 +164,10 @@ public class MainActivity2 extends AppCompatActivity {
                                                 matchCounter.setText(new StringBuilder().append(matchComplete).append("/6 Match").toString());
                                                 chronoTimer.stop();
                                                 String seconds=getChronometerSeconds(chronoTimer);
-                                                Toast.makeText(getApplicationContext(),"You only used "+seconds+" seconds to win,nice! Now please click COMPLETE~",Toast.LENGTH_LONG).show();
+                                                double accuracy=accurateClickedTimes*100/clickedTimes;
+                                                Toast.makeText(getApplicationContext(),"You only used "+seconds+" seconds and clicked "+clickedTimes+" times to win, the accuracy is "+accuracy+"% nice! Now please click COMPLETE~",Toast.LENGTH_LONG).show();
+                                                clickedTimes=0;
+                                                accurateClickedTimes=0;
                                                 completeBtn.setOnClickListener(view1 -> {
                                                     sound.completeMatch();
 
@@ -218,7 +228,10 @@ public class MainActivity2 extends AppCompatActivity {
                                 matchCounter.setText("6/6 Match");
                                 chronoTimer.stop();
                                 String seconds1=getChronometerSeconds(chronoTimer);
-                                Toast.makeText(getApplicationContext(),"You only used "+seconds1+" seconds to win,nice! Now please click COMPLETE~",Toast.LENGTH_LONG).show();
+                                double accuracy=accurateClickedTimes*100/clickedTimes;
+                                Toast.makeText(getApplicationContext(),"You only used "+seconds1+" seconds and clicked "+clickedTimes+" times to win, the accuracy is "+accuracy+"% nice! Now please click COMPLETE~",Toast.LENGTH_LONG).show();
+                                clickedTimes=0;
+                                accurateClickedTimes=0;
                                 completeBtn.setOnClickListener(view1 -> {
 
                                     sound.completeMatch();
@@ -278,8 +291,8 @@ public class MainActivity2 extends AppCompatActivity {
             return String.valueOf(totalss);
         }
         return String.valueOf(totalss);
-
-
     }
+
+
 
 }
