@@ -161,7 +161,7 @@ public class MainActivity2 extends AppCompatActivity {
                                                 matchCounter.setText(new StringBuilder().append(matchComplete).append("/6 Match").toString());
                                                 chronoTimer.stop();
                                                 String seconds=getChronometerSeconds(chronoTimer);
-                                                Toast.makeText(getApplicationContext(),"You only used "+seconds+" seconds to win,nice!",Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getApplicationContext(),"You only used "+seconds+" seconds to win,nice! Now please click COMPLETE~",Toast.LENGTH_LONG).show();
                                                 completeBtn.setOnClickListener(view1 -> {
                                                     sound.completeMatch();
 
@@ -222,9 +222,9 @@ public class MainActivity2 extends AppCompatActivity {
                                 matchCounter.setText("6/6 Match");
                                 chronoTimer.stop();
                                 String seconds1=getChronometerSeconds(chronoTimer);
-                                Toast.makeText(getApplicationContext(),"You only used "+seconds1+" seconds to win,nice!",Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(),"You only used "+seconds1+" seconds to win,nice! Now please click COMPLETE~",Toast.LENGTH_LONG).show();
                                 completeBtn.setOnClickListener(view1 -> {
-                                    Toast toast=Toast.makeText(getApplicationContext(), "默认的Toast", Toast.LENGTH_SHORT);
+
                                     sound.completeMatch();
 
                                     Intent intent = new Intent(this,MainActivity.class);
