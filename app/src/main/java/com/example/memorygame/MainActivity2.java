@@ -36,6 +36,10 @@ public class MainActivity2 extends AppCompatActivity {
     private int clickedTimes=0;
     private int accurateClickedTimes=0;
 
+    List<PlayerData> PlayerStats = new ArrayList<PlayerData>(10);
+
+    public int totalCount=0;
+
     private void startTimer(ArrayList<ImageButton> tempClicked){
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis,1000) {
             @Override
@@ -167,6 +171,7 @@ public class MainActivity2 extends AppCompatActivity {
                                         if (completeBtn != null) {
                                             completeBtn.setVisibility(View.VISIBLE);
                                             matchCounter.setText(new StringBuilder().append(matchComplete).append("/6 Match").toString());
+
                                             chronoTimer.stop();
                                             String seconds = getChronometerSeconds(chronoTimer);
                                             double accuracy = accurateClickedTimes * 100 / clickedTimes;
@@ -182,6 +187,33 @@ public class MainActivity2 extends AppCompatActivity {
                                                     String[] children = dir.list();
                                                     for (int i = 0; i < children.length; i++) {
                                                         new File(dir, children[i]).delete();
+
+                                        }
+                                        else{
+                                            Button completeBtn = findViewById(R.id.completeActivity2);
+                                            if (completeBtn !=null){
+                                                completeBtn.setVisibility(View.VISIBLE);
+                                                matchCounter.setText(new StringBuilder().append(matchComplete).append("/6 Match").toString());
+                                                chronoTimer.stop();
+                                                String seconds=getChronometerSeconds(chronoTimer);
+                                                double accuracy=accurateClickedTimes*100/clickedTimes;
+                                                Toast.makeText(getApplicationContext(),"You only used "+seconds+" seconds and clicked "+clickedTimes+" times to win, the accuracy is "+accuracy+"% nice! Now please click COMPLETE~",Toast.LENGTH_LONG).show();
+                                                clickedTimes=0;
+                                                accurateClickedTimes=0;
+                                                completeBtn.setOnClickListener(view1 -> {
+                                                    sound.completeMatch();
+
+                                                    Toast.makeText(getApplicationContext(),GetRank(Integer.parseInt(seconds),accuracy),Toast.LENGTH_LONG).show();
+
+                                                    Intent intent = new Intent(this,MainActivity.class);
+                                                    File dir = new File (this.getFilesDir(), filePath);
+                                                    if (dir.isDirectory())
+                                                    {
+                                                        String[] children = dir.list();
+                                                        for (int i = 0; i < children.length; i++)
+                                                        {
+                                                            new File(dir, children[i]).delete();
+                                                        }
                                                     }
                                                 }
                                                 handler.postDelayed(new Runnable() {
@@ -210,6 +242,7 @@ public class MainActivity2 extends AppCompatActivity {
                             button.setImageBitmap((Bitmap) button.getTag());
                             tempClicked.add(button);
                         }
+
                     } else {
                         for (ImageButton buttons : tempClicked) {
                             buttons.setImageResource(R.drawable.sushi2);
@@ -242,6 +275,36 @@ public class MainActivity2 extends AppCompatActivity {
                                     String[] children = dir.list();
                                     for (int i = 0; i < children.length; i++) {
                                         new File(dir, children[i]).delete();
+
+
+                        System.out.println((tempClicked.size()));
+                        if(matchComplete==5 && tempClicked.size()==2){
+                            Button completeBtn = findViewById(R.id.completeActivity2);
+                            if (completeBtn !=null){
+                                completeBtn.setVisibility(View.VISIBLE);
+                                TextView matchCounter = findViewById(R.id.matches);
+                                matchCounter.setText("6/6 Match");
+                                chronoTimer.stop();
+                                String seconds1=getChronometerSeconds(chronoTimer);
+                                double accuracy=accurateClickedTimes*100/clickedTimes;
+                                Toast.makeText(getApplicationContext(),"You only used "+seconds1+" seconds and clicked "+clickedTimes+" times to win, the accuracy is "+accuracy+"% nice! Now please click COMPLETE~",Toast.LENGTH_LONG).show();
+                                clickedTimes=0;
+                                accurateClickedTimes=0;
+                                completeBtn.setOnClickListener(view1 -> {
+
+                                    sound.completeMatch();
+                                    Toast.makeText(getApplicationContext(),GetRank(Integer.parseInt(seconds1),accuracy),Toast.LENGTH_LONG).show();
+
+                                    Intent intent = new Intent(this,MainActivity.class);
+                                    File dir = new File (this.getFilesDir(), filePath);
+                                    if (dir.isDirectory())
+                                    {
+                                        String[] children = dir.list();
+                                        for (int i = 0; i < children.length; i++)
+                                        {
+                                            new File(dir, children[i]).delete();
+                                        }
+
                                     }
                                 }
                                 handler.postDelayed(new Runnable() {
@@ -292,6 +355,34 @@ public class MainActivity2 extends AppCompatActivity {
         return String.valueOf(totalss);
     }
 
+
+    //Now we just use a ArrayList to store Data cause we dont have that much players
+    public String GetRank(int seconds,double accuracy){
+        int count=0;
+
+        PlayerData player=new PlayerData(seconds,accuracy);
+        if(totalCount==0){
+            return "You have beaten 100% of the players";
+        }
+        else{
+            for(PlayerData p:PlayerStats){
+                if(p.getSecond()>player.getSecond()){
+                    count+=1;
+                }
+                else if(p.getSecond()==player.getSecond()){
+                    if(p.getAccuracy()>player.getAccuracy()){
+                        count+=1;
+                    }
+                }
+            }
+            PlayerStats.add(player);
+            totalCount+=1;
+            double rank=count*100/totalCount;
+            String s="You have beaten "+rank+"% of the players";
+            return s;
+        }
+
+    }
 
 
 }
