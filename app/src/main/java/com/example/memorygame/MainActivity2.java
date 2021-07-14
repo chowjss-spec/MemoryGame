@@ -52,7 +52,7 @@ public class MainActivity2 extends AppCompatActivity {
             public void onFinish() {
 
                 for (ImageButton buttons : tempClicked) {
-                    buttons.setImageResource(R.drawable.sushi2);
+                    buttons.setImageResource(R.drawable.sushi3);
                 }
                 System.out.println("Don't match");
 
@@ -134,7 +134,7 @@ public class MainActivity2 extends AppCompatActivity {
                 int generatedIndex = randGenerator.nextInt(totalNum);
                 Bitmap tag = listOfBitmaps.get(generatedIndex);
                 button.setTag(tag);
-                button.setImageResource(R.drawable.sushi2);
+                button.setImageResource(R.drawable.sushi3);
                 listOfBitmaps.remove(generatedIndex);
                 totalNum-=1;
 
@@ -222,7 +222,7 @@ public class MainActivity2 extends AppCompatActivity {
                             }
                             else {
                                 for (ImageButton buttons : tempClicked) {
-                                    buttons.setImageResource(R.drawable.sushi2);
+                                    buttons.setImageResource(R.drawable.sushi3);
                                 }
                                 System.out.println("Don't match");
 
