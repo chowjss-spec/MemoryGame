@@ -35,6 +35,10 @@ public class MainActivity2 extends AppCompatActivity {
     private int clickedTimes=0;
     private int accurateClickedTimes=0;
 
+    List<PlayerData> PlayerStats = new ArrayList<PlayerData>(10);
+
+    public int totalCount=0;
+
     private void startTimer(ArrayList<ImageButton> tempClicked){
         mCountDownTimer = new CountDownTimer(mTimeLeftInMillis,1000) {
             @Override
@@ -171,6 +175,8 @@ public class MainActivity2 extends AppCompatActivity {
                                                 completeBtn.setOnClickListener(view1 -> {
                                                     sound.completeMatch();
 
+                                                    Toast.makeText(getApplicationContext(),GetRank(Integer.parseInt(seconds),accuracy),Toast.LENGTH_LONG).show();
+
                                                     Intent intent = new Intent(this,MainActivity.class);
                                                     File dir = new File (this.getFilesDir(), filePath);
                                                     if (dir.isDirectory())
@@ -235,6 +241,7 @@ public class MainActivity2 extends AppCompatActivity {
                                 completeBtn.setOnClickListener(view1 -> {
 
                                     sound.completeMatch();
+                                    Toast.makeText(getApplicationContext(),GetRank(Integer.parseInt(seconds1),accuracy),Toast.LENGTH_LONG).show();
 
                                     Intent intent = new Intent(this,MainActivity.class);
                                     File dir = new File (this.getFilesDir(), filePath);
@@ -293,6 +300,34 @@ public class MainActivity2 extends AppCompatActivity {
         return String.valueOf(totalss);
     }
 
+
+    //Now we just use a ArrayList to store Data cause we dont have that much players
+    public String GetRank(int seconds,double accuracy){
+        int count=0;
+
+        PlayerData player=new PlayerData(seconds,accuracy);
+        if(totalCount==0){
+            return "You have beaten 100% of the players";
+        }
+        else{
+            for(PlayerData p:PlayerStats){
+                if(p.getSecond()>player.getSecond()){
+                    count+=1;
+                }
+                else if(p.getSecond()==player.getSecond()){
+                    if(p.getAccuracy()>player.getAccuracy()){
+                        count+=1;
+                    }
+                }
+            }
+            PlayerStats.add(player);
+            totalCount+=1;
+            double rank=count*100/totalCount;
+            String s="You have beaten "+rank+"% of the players";
+            return s;
+        }
+
+    }
 
 
 }
