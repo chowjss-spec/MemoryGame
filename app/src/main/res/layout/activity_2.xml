@@ -6,7 +6,7 @@
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity"
-    android:background="@color/babygreen">
+    android:background="@color/blue">
 
     <ImageView
         android:id="@+id/logo2"
