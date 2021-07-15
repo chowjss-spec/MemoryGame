@@ -36,8 +36,6 @@ public class MainActivity2 extends AppCompatActivity {
     private int clickedTimes=0;
     private int accurateClickedTimes=0;
 
-    List<PlayerData> PlayerStats = new ArrayList<PlayerData>(10);
-
     public int totalCount=0;
 
     private void startTimer(ArrayList<ImageButton> tempClicked){
@@ -173,13 +171,10 @@ public class MainActivity2 extends AppCompatActivity {
                                                     chronoTimer.stop();
                                                     String seconds=getChronometerSeconds(chronoTimer);
                                                     double accuracy=accurateClickedTimes*100/clickedTimes;
-                                                    Toast.makeText(getApplicationContext(),"You only used "+seconds+" seconds and clicked "+clickedTimes+" times to win, the accuracy is "+accuracy+"% nice! Now please click COMPLETE~",Toast.LENGTH_LONG).show();
-                                                    clickedTimes=0;
-                                                    accurateClickedTimes=0;
+                                                    showCompleteMessage(seconds,accuracy);
                                                     completeBtn.setOnClickListener(view1 -> {
-                                                        sound.completeMatch();
 
-                                                        Toast.makeText(getApplicationContext(),GetRank(Integer.parseInt(seconds),accuracy),Toast.LENGTH_LONG).show();
+                                                        sound.completeMatch();
 
                                                         Intent intent = new Intent(this,MainActivity.class);
                                                         File dir = new File (this.getFilesDir(), filePath);
@@ -239,13 +234,10 @@ public class MainActivity2 extends AppCompatActivity {
                                     chronoTimer.stop();
                                     String seconds1=getChronometerSeconds(chronoTimer);
                                     double accuracy=accurateClickedTimes*100/clickedTimes;
-                                    Toast.makeText(getApplicationContext(),"You only used "+seconds1+" seconds and clicked "+clickedTimes+" times to win, the accuracy is "+accuracy+"% nice! Now please click COMPLETE~",Toast.LENGTH_LONG).show();
-                                    clickedTimes=0;
-                                    accurateClickedTimes=0;
+                                    showCompleteMessage(seconds1,accuracy);
                                     completeBtn.setOnClickListener(view1 -> {
 
                                         sound.completeMatch();
-                                        Toast.makeText(getApplicationContext(),GetRank(Integer.parseInt(seconds1),accuracy),Toast.LENGTH_LONG).show();
 
                                         Intent intent = new Intent(this,MainActivity.class);
                                         File dir = new File (this.getFilesDir(), filePath);
@@ -305,33 +297,14 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
 
-    //Now we just use a ArrayList to store Data cause we dont have that much players
-    public String GetRank(int seconds,double accuracy){
-        int count=0;
-
-        PlayerData player=new PlayerData(seconds,accuracy);
-        if(totalCount==0){
-            return "You have beaten 100% of the players";
+    public void showCompleteMessage(String seconds, double accuracy){
+        if(Integer.parseInt(seconds)<20){
+            Toast.makeText(getApplicationContext(),"You only used "+seconds+" seconds and clicked "+clickedTimes+" times to win, the accuracy is "+accuracy+"%! Really nice! Now please click COMPLETE~",Toast.LENGTH_LONG).show();
         }
         else{
-            for(PlayerData p:PlayerStats){
-                if(p.getSecond()>player.getSecond()){
-                    count+=1;
-                }
-                else if(p.getSecond()==player.getSecond()){
-                    if(p.getAccuracy()>player.getAccuracy()){
-                        count+=1;
-                    }
-                }
-            }
-            PlayerStats.add(player);
-            totalCount+=1;
-            double rank=count*100/totalCount;
-            String s="You have beaten "+rank+"% of the players";
-            return s;
+            Toast.makeText(getApplicationContext(),"You used "+seconds+" seconds and clicked "+clickedTimes+" times to win, the accuracy is "+accuracy+"%! Need to practice more~Now please click COMPLETE~",Toast.LENGTH_LONG).show();
         }
-
+        clickedTimes=0;
+        accurateClickedTimes=0;
     }
-
-
 }
