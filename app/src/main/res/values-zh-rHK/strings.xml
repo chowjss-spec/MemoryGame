@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">記憶匹配</string>
+    <string name="playButton">開始</string>
+    <string name="fetchButton">匹配</string>
+    <string name="logo">圖標</string>
+    <string name="enter_url">輸入網址</string>
+    <string name="number_of_matches">6對有0個匹配</string>
+</resources>

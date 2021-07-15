@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Speicherabgleich</string>
+    <string name="playButton">abspielen</string>
+    <string name="fetchButton">Holen</string>
+    <string name="logo">logo</string>
+    <string name="enter_url">URL eingeben</string>
+    <string name="number_of_matches">0 von 6 Übereinstimmungen</string>
+</resources>

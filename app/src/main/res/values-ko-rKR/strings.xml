@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">M메모리 매치</string>
+    <string name="playButton">플레이</string>
+    <string name="fetchButton">술책</string>
+    <string name="logo">심벌 마크</string>
+    <string name="enter_url">URL 입력</string>
+    <string name="number_of_matches">0/6 경기</string>
+</resources>
