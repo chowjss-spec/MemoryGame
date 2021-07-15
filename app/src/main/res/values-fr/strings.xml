@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MCorrespondance de mémoire</string>
+    <string name="logo">logo</string>
+    <string name="playButton">Jouer</string>
+    <string name="fetchButton">Aller chercher</string>
+    <string name="enter_url">Entrer l\'URL</string>
+    <string name="number_of_matches">0 de 6 correspondances</string>
+</resources>

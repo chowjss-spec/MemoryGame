@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Partita di memoria</string>
+    <string name="logo">logo</string>
+    <string name="fetchButton">Recupera</string>
+    <string name="playButton">Giocare</string>
+    <string name="enter_url">Inserisci l\'URL</string>
+    <string name="number_of_matches">0 di 6 corrispondenze</string>
+</resources>
