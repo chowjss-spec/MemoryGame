@@ -3,6 +3,7 @@
     <string name="app_name">Memory Match</string>
     <string name="logo">ロゴ</string>
     <string name="fetchButton">フェッチ</string>
+    <string name="completeButton">実施する</string>
     <string name="playButton">遊び</string>
     <string name="enter_url">URLを入力</string>
     <string name="number_of_matches">6試合中0試合</string>

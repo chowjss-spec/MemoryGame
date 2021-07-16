@@ -47,4 +47,28 @@
         <item name="android:src">@drawable/sushi2</item>
         <item name="android:background">@drawable/imageview_blue_border</item>
     </style>
+    <style name="buttonStyle7">
+        <item name="android:text">@string/playButton</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black1</item>
+        <item name="fontFamily">Courier New Tur</item>
+        <item name="android:background">@drawable/sushibtn</item>
+    </style>
+    <style name="buttonStyle8">
+        <item name="android:text">@string/completeButton</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black1</item>
+        <item name="fontFamily">Courier New Tur</item>
+        <item name="android:background">@drawable/sushibtn</item>
+    </style>
+    <style name="buttonStyle9">
+        <item name="android:text">@string/fetchButton</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black1</item>
+        <item name="fontFamily">Arial Black</item>
+        <item name="android:background">@drawable/wasabibtn</item>
+    </style>
 </resources>

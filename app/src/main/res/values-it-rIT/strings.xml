@@ -3,6 +3,7 @@
     <string name="app_name">Partita di memoria</string>
     <string name="logo">logo</string>
     <string name="fetchButton">Recupera</string>
+    <string name="completeButton">Effettuare</string>
     <string name="playButton">Giocare</string>
     <string name="enter_url">Inserisci l\'URL</string>
     <string name="number_of_matches">0 di 6 corrispondenze</string>

@@ -3,6 +3,7 @@
     <string name="app_name">Матч памяти</string>
     <string name="playButton">Играть</string>
     <string name="fetchButton">Принести</string>
+    <string name="completeButton">выполнять</string>
     <string name="logo">логотип</string>
     <string name="enter_url">Введите URL</string>
     <string name="number_of_matches">0 из 6 совпадений</string>

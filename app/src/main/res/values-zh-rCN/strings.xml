@@ -3,6 +3,7 @@
     <string name="app_name">" 记忆匹配"</string>
     <string name="playButton">开始</string>
     <string name="fetchButton">匹配</string>
+    <string name="completeButton">完成</string>
     <string name="logo">图标</string>
     <string name="enter_url">输入网址</string>
     <string name="number_of_matches">6对中有0个匹配</string>

@@ -2,6 +2,7 @@
     <string name="app_name">Memory Match</string>
     <string name="playButton">Play</string>
     <string name="fetchButton">Fetch</string>
+    <string name="completeButton">Complete</string>
     <string name="logo">logo</string>
     <string name="enter_url">Enter URL</string>
     <string name="number_of_matches">0 of 6 matches</string>
