@@ -51,7 +51,7 @@
         <item name="android:text">@string/playButton</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/black1</item>
+        <item name="android:textColor">#080808</item>
         <item name="fontFamily">Courier New Tur</item>
         <item name="android:background">@drawable/sushibtn</item>
     </style>
@@ -59,16 +59,16 @@
         <item name="android:text">@string/completeButton</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/black1</item>
+        <item name="android:textColor">#080808</item>
         <item name="fontFamily">Courier New Tur</item>
         <item name="android:background">@drawable/sushibtn</item>
     </style>
     <style name="buttonStyle9">
         <item name="android:text">@string/fetchButton</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">11sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">@color/black1</item>
-        <item name="fontFamily">Arial Black</item>
+        <item name="android:textColor">#080808</item>
+        <item name="fontFamily">Courier New Tur</item>
         <item name="android:background">@drawable/wasabibtn</item>
     </style>
 </resources>
